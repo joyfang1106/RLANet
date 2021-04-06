@@ -43,7 +43,7 @@ Use multi-processing distributed training to launch N processes per node, which 
 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 '/dev/shm/imagenet/'
 ```
 
-2. To train an RLA-Net base on a checkpoint (single node with 4 GPUs)
+2. To train an RLA-Net base on a checkpoint
 ```bash
 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50/checkpoint.pth.tar' --action 'part2' '/dev/shm/imagenet/'
 ```
