@@ -33,11 +33,27 @@ Please refer to [get_started.md](docs/get_started.md) for more details about ins
 ## Quick Start
 
 ### Training
+
+#### Use single node or multi node with multiple GPUs
+
+Use multi-processing distributed training to launch N processes per node, which has N GPUs. This is the fastest way to use PyTorch for either single node or multi node data parallel training.
+
 1. To train an RLA-Net using ImageNet dataset and ResNet50 as backbone with batch size = 256
 ```bash
 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 '/dev/shm/imagenet/'
 ```
-2. To train an RLA-Net with a pretrained model (checkpoint)
+
+2. To train an RLA-Net base on a checkpoint (single node with 4 GPUs)
 ```bash
 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50/checkpoint.pth.tar' --action 'part2' '/dev/shm/imagenet/'
 ```
+
+3. To evaluate the best model
+```bash
+python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0   --resume='work_dirs/rla_resnet50/model_best.pth.tar' -e '/dev/shm/imagenet/'
+```
+#### Specify single GPU or multiple GPUs
+
+1. To train an RLA-Net using 2 GPUs with batch size = 128
+
+2. To evaluate the best model using single GPU with batch size = 64
