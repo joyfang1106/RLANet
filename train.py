@@ -303,7 +303,7 @@ def main_worker(gpu, ngpus_per_node, args):
         m = time.time()
         _, _ = validate(val_loader, model, criterion, args)
         n = time.time()
-        print("evaluate_time/epoch (h): ", (n-m)/3600)
+        print("evaluate_time (h): ", (n-m)/3600)
         return
 
     # create folder
@@ -363,7 +363,7 @@ def main_worker(gpu, ngpus_per_node, args):
         end_time = time.time()
         time_value = (end_time - start_time) / 3600
         print("-" * 80)
-        print("train_time/epoch (h): ", time_value)
+        print("epoch {} train_time (h): {}".format(epoch, time_value))
         print("-" * 80)
         
 
