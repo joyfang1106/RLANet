@@ -34,7 +34,7 @@ This paper proposes a recurrent layer aggregation (RLA) module that makes use of
 ```bash
 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 '/dev/shm/imagenet/'
 ```
-1. To train an RLA-Net with a pretrained model (checkpoint)
+2. To train an RLA-Net with a pretrained model (checkpoint)
 ```bash
 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50/checkpoint.pth.tar' --action 'part2' '/dev/shm/imagenet/'
 ```
