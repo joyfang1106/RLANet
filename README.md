@@ -26,3 +26,11 @@ This paper proposes a recurrent layer aggregation (RLA) module that makes use of
 - PyTorch 1.0+
 - [thop](https://github.com/Lyken17/pytorch-OpCounter)
 - [mmdetection](https://github.com/open-mmlab/mmdetection)
+
+## Quick Start
+
+### Train on ImageNet
+
+```bash
+python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 '/dev/shm/imagenet/'
+```
