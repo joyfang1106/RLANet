@@ -27,7 +27,7 @@ This paper proposes a recurrent layer aggregation (RLA) module that makes use of
 - [thop](https://github.com/Lyken17/pytorch-OpCounter)
 - [mmdetection](https://github.com/open-mmlab/mmdetection)
 
-Please refer to [get_started.md](docs/get_started.md) for installation of mmdetection.
+Please refer to [get_started.md](docs/get_started.md) for more details about installation.
 
 
 ## Quick Start
