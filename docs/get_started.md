@@ -93,7 +93,12 @@
 
 #### 1. ImageNet
 
-#### 2. COCO
+#### 2. COCO2017
+
+Download COCO2017 dataset [here](http://cocodataset.org/#download) for object detection and instance segmentation. 
+
+We implement all detectors by using [MMDetection](https://github.com/open-mmlab/mmdetection) toolkit and employ the default settings. Keep the path as 
+
 ```
 /mmdetection
     /data
