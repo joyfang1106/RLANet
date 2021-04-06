@@ -211,7 +211,6 @@ def main_worker(gpu, ngpus_per_node, args):
         #if args.arch.startswith('alexnet') or args.arch.startswith('vgg'):
             #model.features = torch.nn.DataParallel(model.features)
             #model.cuda()
-
         model = torch.nn.DataParallel(model).cuda()
         
     # print(model)
