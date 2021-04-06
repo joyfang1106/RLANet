@@ -1,4 +1,6 @@
-## Prerequisites
+## Get Started
+
+### Prerequisites
 
 - Linux or macOS (Windows is in experimental support)
 - Python 3.6+
@@ -7,7 +9,7 @@
 - GCC 5+
 - [MMCV](https://mmcv.readthedocs.io/en/latest/#installation)
 
-## Installation
+### Installation
 
 0. You can simply install mmdetection with the following commands:
     `pip install mmdet`
@@ -86,3 +88,18 @@
     pip install -r requirements/build.txt
     pip install -v -e .  # or "python setup.py develop"
     ```
+    
+### Prepare Datasets
+
+#### 1. ImageNet
+
+#### 2. COCO
+```
+/mmdetection
+    /data
+        /coco
+            /annotations
+            /train2017
+            /val2017
+            /test2017
+```
