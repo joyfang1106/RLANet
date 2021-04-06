@@ -12,7 +12,7 @@ This paper proposes a recurrent layer aggregation (RLA) module that makes use of
 ## RLA module
 
 
-<img src="figures/rla_module.png" width="300" alt="RLA_module"/><br/>
+<img src="figures/rla_module.png" width="350" alt="RLA_module"/><br/>
 
 ## Changelog
 
