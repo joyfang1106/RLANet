@@ -304,7 +304,7 @@ def main_worker(gpu, ngpus_per_node, args):
         m = time.time()
         _, _ = validate(val_loader, model, criterion, args)
         n = time.time()
-        print((n-m)/3600)
+        print("evaluate_time/epoch (h): ", (n-m)/3600)
         return
 
     # create folder
@@ -314,7 +314,7 @@ def main_worker(gpu, ngpus_per_node, args):
     save_path = "%s/%s/"%(args.work_dir, args.arch + '_' + args.action)
     if not os.path.exists(save_path):
        os.mkdir(save_path)
-    print ('save checkpoint file and log in :', save_path)
+    print ("save checkpoint file and log in: ", save_path)
     
     loss_plot = {}
     train_acc1_plot = {}
@@ -364,7 +364,7 @@ def main_worker(gpu, ngpus_per_node, args):
         end_time = time.time()
         time_value = (end_time - start_time) / 3600
         print("-" * 80)
-        print(time_value)
+        print("train_time/epoch (h): ", time_value)
         print("-" * 80)
         
 
