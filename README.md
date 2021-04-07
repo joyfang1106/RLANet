@@ -50,7 +50,7 @@ python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-si
 
 3. To evaluate the best model
 ```bash
-python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0   --resume='work_dirs/rla_resnet50/model_best.pth.tar' -e '/dev/shm/imagenet/'
+python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50/model_best.pth.tar' -e '/dev/shm/imagenet/'
 ```
 #### Specify single GPU or multiple GPUs
 
