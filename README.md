@@ -77,3 +77,9 @@ Use multi-processing distributed training to launch N processes per node, which 
   ```bash
   python best.py --log-dir rla_resnet50
   ```
+### Visualizing the training result
+
+1. To generate acc_plot, loss_plot
+  ```bash
+  python eval_visual.py --log-dir rla_resnet50
+  ```
