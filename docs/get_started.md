@@ -93,6 +93,21 @@
 
 #### 1. ImageNet
 
+Download ImageNet dataset from official website in your local directory.
+
+Or put this dataset into your memory if the speed of reading and writing to the disk is too slow.
+
+```bash
+# root执行以下操作
+mkdir /shm
+chmod 777 /shm
+mount -t tmpfs -o size=160G tmpfs /shm
+
+# user执行以下操作
+mkdir /shm/imagenet
+tar -xf ~/imagenet_PP_NoTest.tar -C /shm/imagenet/ --checkpoint=100000 # 1GB per chkpt, total ~150G
+```
+
 #### 2. COCO2017
 
 Download COCO2017 dataset [here](http://cocodataset.org/#download) for object detection and instance segmentation. 
