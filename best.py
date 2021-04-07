@@ -10,11 +10,12 @@ parser.add_argument('--log-dir', '-ld', default='rla_resnet50', type=str,
                     help='the sub dir to save logs and models of a model architecture')
 
 
-def read_txtlog(log_dir, log_name):
+def read_acclog(log_dir, log_name):
     # log_dir = '/home/r12user3/Projects/RLA/ImageNet/RLANet/work_dirs/rla_resnet50/'
     # log_name = 'val_acc1.txt'
     with open(os.path.join(log_dir, log_name),"r") as f:
         lines = f.readlines()
+    lines = [x.strip() for x in lines]
         
     acc_list = []
     epo_list = []
@@ -22,7 +23,7 @@ def read_txtlog(log_dir, log_name):
         epo_i = lines[i].split(' ')[0]
         acc_i = lines[i].split('(')[1]
         acc_i = acc_i.split(',')[0]
-        epo_list.append(epo_i)
+        epo_list.append(int(epo_i))
         acc_list.append(float(acc_i))
         
     return acc_list, epo_list
@@ -32,12 +33,12 @@ def main():
     global args
     args = parser.parse_args()
     log_dir = "%s/%s/"%(args.work_dir, args.log_dir)
-    acc1_list, epo1_list = read_txtlog(log_dir, log_name='val_acc1.txt')
+    acc1_list, epo1_list = read_acclog(log_dir, log_name='val_acc1.txt')
     best_acc1 = np.max(acc1_list)
     best_idx1 = acc1_list.index(np.max(acc1_list))
     best_epo1 = epo1_list[best_idx1]
     
-    acc5_list, epo5_list = read_txtlog(log_dir, log_name='val_acc5.txt')
+    acc5_list, epo5_list = read_acclog(log_dir, log_name='val_acc5.txt')
     best_acc5 = np.max(acc5_list)
     best_idx5 = acc5_list.index(np.max(acc5_list))
     best_epo5 = epo5_list[best_idx5]
