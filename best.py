@@ -42,10 +42,14 @@ def main():
     best_idx5 = acc5_list.index(np.max(acc5_list))
     best_epo5 = epo5_list[best_idx5]
     
+    with open(os.path.join(log_dir, 'best.txt'), "w") as f:
+        f.write("Acc@1:" + str(best_acc1) + "\n")
+        f.write("Acc@5:" + str(best_acc5))
+    
     print ("-" * 80)
-    print ("* best Acc@1: {} at epoch {}".format(best_acc1, best_epo1))
+    print ("* best Acc@1: {:.3f} at epoch {}".format(best_acc1, best_epo1))
     print ("-" * 80)
-    print ("* best Acc@5: {} at epoch {}".format(best_acc5, best_epo5))
+    print ("* best Acc@5: {:.3f} at epoch {}".format(best_acc5, best_epo5))
     print ("-" * 80)
     
     
