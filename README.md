@@ -73,7 +73,7 @@ Use multi-processing distributed training to launch N processes per node, which 
   CUDA_VISIBLE_DEVICES=0 python train.py -a rla_resnet50 --b 32 --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50/model_best.pth.tar' -e '/dev/shm/imagenet/'
   ```
 
-3. To obtain the best Top-1 and Top-5 accuracy
+3. To obtain the best Top-1 and Top-5 accuracy (the best model 'model_best.pth.tar' is selected by Top-1 acc)
   ```bash
   python best.py --log-dir rla_resnet50
   ```
