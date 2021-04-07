@@ -9,10 +9,23 @@
 - GCC 5+
 - [MMCV](https://mmcv.readthedocs.io/en/latest/#installation)
 
+### My Environment
+
+- CUDA Version 10.2.89
+- python 3.7
+- pytorch 1.5.0
+- torchvision 0.6.0
+- numpy 1.19.2
+- mmcv-full 1.2.7                 
+- mmdet 2.10.0                   
+- mmpycocotools 12.0.3                   
+
+
 ### Installation
 
-0. You can simply install mmdetection with the following commands:
-    `pip install mmdet`
+Follow the steps in MMDetection [get_started.md](https://github.com/open-mmlab/mmdetection/blob/master/docs/get_started.md).
+
+Since I foud that some steps in this guideline did not work well, I provide my steps here.
 
 1. Create a conda virtual environment and activate it.
 
@@ -24,57 +37,28 @@
 2. Install PyTorch and torchvision following the [official instructions](https://pytorch.org/), e.g.,
 
     ```shell
-    conda install pytorch torchvision -c pytorch
+    # CUDA 10.2
+    conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=10.2 -c pytorch
+    # CUDA 10.1
+    conda install pytorch==1.5.0 torchvision==0.6.0 cudatoolkit=10.1 -c pytorch
     ```
 
     Note: Make sure that your compilation CUDA version and runtime CUDA version match.
     You can check the supported CUDA version for precompiled packages on the [PyTorch website](https://pytorch.org/).
+    
+    [PyTorch history versions](https://pytorch.org/get-started/previous-versions/)
 
-    `E.g.1` If you have CUDA 10.1 installed under `/usr/local/cuda` and would like to install
-    PyTorch 1.5, you need to install the prebuilt PyTorch with CUDA 10.1.
 
-    ```shell
-    conda install pytorch cudatoolkit=10.1 torchvision -c pytorch
-    ```
-
-    `E.g. 2` If you have CUDA 9.2 installed under `/usr/local/cuda` and would like to install
-    PyTorch 1.3.1., you need to install the prebuilt PyTorch with CUDA 9.2.
+3. Install mmcv-full.
 
     ```shell
-    conda install pytorch=1.3.1 cudatoolkit=9.2 torchvision=0.4.2 -c pytorch
+    # pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/{cu_version}/{torch_version}/index.html
+    # CUDA 10.2
+    pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu102/torch1.5.0/index.html
+    # CUDA 10.1
+    pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.5.0/index.html
     ```
-
-    If you build PyTorch from source instead of installing the prebuilt pacakge,
-    you can use more CUDA versions such as 9.0.
-
-3. Install mmcv-full, we recommend you to install the pre-build package as below.
-
-    ```shell
-    pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/{cu_version}/{torch_version}/index.html
-    ```
-
-    Please replace `{cu_version}` and `{torch_version}` in the url to your desired one. For example, to install the latest `mmcv-full` with `CUDA 11` and `PyTorch 1.7.0`, use the following command:
-
-    ```shell
-    pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu110/torch1.7.0/index.html
-    ```
-
-    See [here](https://github.com/open-mmlab/mmcv#install-with-pip) for different versions of MMCV compatible to different PyTorch and CUDA versions.
-    Optionally you can choose to compile mmcv from source by the following command
-
-    ```shell
-    git clone https://github.com/open-mmlab/mmcv.git
-    cd mmcv
-    MMCV_WITH_OPS=1 pip install -e .  # package mmcv-full will be installed after this step
-    cd ..
-    ```
-
-    Or directly run
-
-    ```shell
-    pip install mmcv-full
-    ```
-
+    
 4. Clone the MMDetection repository.
 
     ```shell
@@ -86,9 +70,16 @@
 
     ```shell
     pip install -r requirements/build.txt
-    pip install -v -e .  # or "python setup.py develop"
+    python setup.py develop  # not suggest to use pip install -v -e .
     ```
     
+6. Make the symblic link to coco dataset
+
+    ```shell
+    mkdir data
+    ln -s /path/to/coco data
+    ```
+
 ### Prepare Datasets
 
 #### 1. ImageNet
@@ -97,7 +88,7 @@ Download ImageNet dataset from official website in your local directory.
 
 Or put this dataset into your memory if the speed of reading and writing to the disk is too slow.
 
-```bash
+```shell
 # root执行以下操作
 mkdir /shm
 chmod 777 /shm
@@ -122,4 +113,11 @@ We implement all detectors by using [MMDetection](https://github.com/open-mmlab/
             /train2017
             /val2017
             /test2017
+```
+
+Make the symblic link to coco dataset via
+
+```bash
+mkdir data # create a folder called data in your local directory
+ln -s /path/to/coco data  # make the symblic link
 ```
