@@ -54,6 +54,16 @@ python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-si
 ```
 #### Specify single GPU or multiple GPUs
 
-1. To train an RLA-Net using 2 GPUs with batch size = 128
+1. To train an RLA-Net using 2 GPUs with batch size = 256
+```bash
+CUDA_VISIBLE_DEVICES=0,1 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 '/dev/shm/imagenet/'
+```
 
-2. To evaluate the best model using single GPU with batch size = 64
+```bash
+CUDA_VISIBLE_DEVICES=0,1 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50/checkpoint.pth.tar' --action 'part2' '/dev/shm/imagenet/'
+```
+
+2. To evaluate the best model using single specified GPU with batch size = 32
+```bash
+CUDA_VISIBLE_DEVICES=0 python train.py -a rla_resnet50 --b 32 --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50/model_best.pth.tar' -e '/dev/shm/imagenet/'
+```
