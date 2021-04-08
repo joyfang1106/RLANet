@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('--work-dir', default='work_dirs', type=str, 
                     help='the dir to save logs and models')
-parser.add_argument('--log-dir', '-ld', default='rla_resnet50', type=str, 
+parser.add_argument('--log-dir', '-ld', default='rla_resnet50_', type=str, 
                     help='the sub dir to save logs and models of a model architecture')
 
 
