@@ -294,6 +294,8 @@ def train(train_loader, model, criterion, optimizer, epoch):
     # switch to train mode
     model.train()
 
+    directory = "%s/%s/"%(args.work_dir, args.arch + '_' + args.action)
+    
     end = time.time()
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
@@ -335,11 +337,11 @@ def train(train_loader, model, criterion, optimizer, epoch):
                     epoch, i, len(train_loader), lr_temp, 
                     batch_time=batch_time, data_time=data_time, 
                     loss=losses, top1=top1, top5=top5))
-                losses_batch[epoch] = losses.avg
-                loss_batch = open("loss_batch.txt", 'a')
-                for line in losses_batch:
-                    loss_batch.write(str(epoch) + " " + str(line) + " " + str(losses_batch[line]) + '\n')
-                loss_batch.close()
+                # losses_batch[epoch] = losses.avg
+                # loss_batch = open(directory + "loss_batch.txt", 'a')
+                # for line in losses_batch:
+                #     loss_batch.write(str(epoch) + " " + str(line) + " " + str(losses_batch[line]) + '\n')
+                # loss_batch.close()
 
     return losses.avg, top1.avg, top5.avg
 
