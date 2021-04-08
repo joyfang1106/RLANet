@@ -46,7 +46,7 @@ Use multi-processing distributed training to launch N processes per node, which 
 
 2. To train an RLA-Net base on a checkpoint
   ```bash
-  python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50/checkpoint.pth.tar' --action 'part2' '/dev/shm/imagenet/'
+  python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50_/checkpoint.pth.tar' --action 'part2' '/dev/shm/imagenet/'
   ```
 
 #### Specify single GPU or multiple GPUs
@@ -58,28 +58,28 @@ Use multi-processing distributed training to launch N processes per node, which 
 
 2. To train an RLA-Net base on a checkpoint using 2 specified GPUs
   ```bash
-  CUDA_VISIBLE_DEVICES=0,1 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50/checkpoint.pth.tar' --action 'part2' '/dev/shm/imagenet/'
+  CUDA_VISIBLE_DEVICES=0,1 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50_/checkpoint.pth.tar' --action 'part2' '/dev/shm/imagenet/'
   ```
 
 ### Testing
 
 1. To evaluate the best model
   ```bash
-  python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50/model_best.pth.tar' -e '/dev/shm/imagenet/'
+  python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50_/model_best.pth.tar' -e '/dev/shm/imagenet/'
   ```
 
 2. To evaluate the best model using single specified GPU with batch size = 32
   ```bash
-  CUDA_VISIBLE_DEVICES=0 python train.py -a rla_resnet50 --b 32 --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50/model_best.pth.tar' -e '/dev/shm/imagenet/'
+  CUDA_VISIBLE_DEVICES=0 python train.py -a rla_resnet50 --b 32 --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50_/model_best.pth.tar' -e '/dev/shm/imagenet/'
   ```
 
 3. To obtain the best Top-1 and Top-5 accuracy (the best model 'model_best.pth.tar' is selected by Top-1 acc)
   ```bash
-  python best.py --log-dir rla_resnet50
+  python best.py --log-dir rla_resnet50_
   ```
 ### Visualizing the training result
 
 1. To generate acc_plot, loss_plot
   ```bash
-  python eval_visual.py --log-dir rla_resnet50
+  python eval_visual.py --log-dir rla_resnet50_
   ```
