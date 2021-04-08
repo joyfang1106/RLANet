@@ -11,7 +11,7 @@ parser.add_argument('--log-dir', '-ld', default='rla_resnet50_', type=str,
 
 
 def read_acclog(log_dir, log_name):
-    # log_dir = '/home/r12user3/Projects/RLA/ImageNet/RLANet/work_dirs/rla_resnet50/'
+    # log_dir = '/home/r12user3/Projects/RLA/ImageNet/RLANet/work_dirs/rla_resnet50_/'
     # log_name = 'val_acc1.txt'
     with open(os.path.join(log_dir, log_name),"r") as f:
         lines = f.readlines()
