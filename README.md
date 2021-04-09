@@ -88,7 +88,7 @@ Use multi-processing distributed training to launch N processes per node, which 
 It is same with above ResNet replace `train.py` by `train_light.py`.
 
 ### Compute the parameters and FLOPs
-If you have install [thop](https://github.com/Lyken17/pytorch-OpCounter), you can `paras_flosp.py` to compute the parameters and FLOPs of our models. The usage is below:
+If you have install [thop](https://github.com/Lyken17/pytorch-OpCounter), you can `paras_flops.py` to compute the parameters and FLOPs of our models. The usage is below:
 ```
 python paras_flops.py -a {model_name}
 ```
