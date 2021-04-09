@@ -44,7 +44,7 @@ Use multi-processing distributed training to launch N processes per node, which 
   python train.py -a {model_name} --b {batch_size} --multiprocessing-distributed --world-size 1 --rank 0 {imagenet-folder with train and val folders}
   ```
 
-Example:
+  Example:
   ```bash
   python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 '/dev/shm/imagenet/'
   ```
@@ -54,7 +54,7 @@ Example:
   python train.py -a {model_name} --b {batch_size} --multiprocessing-distributed --world-size 1 --rank 0 --resume {path to latest checkpoint} {imagenet-folder with train and val folders}
   ```
 
-Example:
+  Example:
   ```bash
   python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50_/checkpoint.pth.tar' '/dev/shm/imagenet/'
   ```
@@ -66,7 +66,7 @@ Example:
   CUDA_VISIBLE_DEVICES={device_ids} python train.py -a {model_name} --b {batch_size} --multiprocessing-distributed --world-size 1 --rank 0 {imagenet-folder with train and val folders}
   ```
 
-Example:
+  Example:
   ```bash
   CUDA_VISIBLE_DEVICES=0,1 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 '/dev/shm/imagenet/'
   ```
@@ -76,7 +76,7 @@ Example:
   CUDA_VISIBLE_DEVICES=0,1 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50_/checkpoint.pth.tar' '/dev/shm/imagenet/'
   ```
 
-Example:
+  Example:
   ```bash
   CUDA_VISIBLE_DEVICES={device_ids} python train.py -a {model_name} --b {batch_size} --multiprocessing-distributed --world-size 1 --rank 0 --resume {path to latest checkpoint} {imagenet-folder with train and val folders}
   ```
@@ -85,14 +85,14 @@ Example:
 
 1. To evaluate the best model
 
-Example:
+  Example:
   ```bash
   python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50_/model_best.pth.tar' -e '/dev/shm/imagenet/'
   ```
 
 2. To evaluate the best model using single specified GPU with batch size = 32
 
-Example:
+  Example:
   ```bash
   CUDA_VISIBLE_DEVICES=0 python train.py -a rla_resnet50 --b 32 --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50_/model_best.pth.tar' -e '/dev/shm/imagenet/'
   ```
@@ -102,7 +102,7 @@ Example:
   python best.py --log-dir {log_folder}
   ```
 
-Example:
+  Example:
   ```bash
   python best.py --log-dir rla_resnet50_
   ```
@@ -114,7 +114,7 @@ Example:
   python eval_visual.py --log-dir {log_folder}
   ```
   
-Example:
+  Example:
   ```bash
   python eval_visual.py --log-dir rla_resnet50_
   ```
