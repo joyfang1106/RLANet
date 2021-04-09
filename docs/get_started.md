@@ -86,6 +86,11 @@ Since I foud that some steps in this guideline did not work well, I provide my s
 
 Download ImageNet dataset from official website in your local directory. 
 
+```
+/imagenet
+    /train
+    /val
+```
 
 Or put this dataset into your memory if the speed of reading and writing to the disk is too slow.
 
