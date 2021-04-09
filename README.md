@@ -35,7 +35,7 @@ Please refer to [get_started.md](docs/get_started.md) for more details about ins
 
 ### Train with ResNet
 
-#### Use single node or multi node with multiple GPUs
+#### - Use single node or multi node with multiple GPUs
 
 Use multi-processing distributed training to launch N processes per node, which has N GPUs. This is the fastest way to use PyTorch for either single node or multi node data parallel training.
 
@@ -43,7 +43,7 @@ Use multi-processing distributed training to launch N processes per node, which 
   python train.py -a {model_name} --b {batch_size} --multiprocessing-distributed --world-size 1 --rank 0 {imagenet-folder with train and val folders}
   ```
 
-#### Specify single GPU or multiple GPUs
+#### - Specify single GPU or multiple GPUs
 
   ```bash
   CUDA_VISIBLE_DEVICES={device_ids} python train.py -a {model_name} --b {batch_size} --multiprocessing-distributed --world-size 1 --rank 0 {imagenet-folder with train and val folders}
@@ -65,15 +65,19 @@ To generate acc_plot, loss_plot
   ```
   
 ### Train with MobileNet_v2
+
 It is same with above ResNet replace `train.py` by `train_light.py`.
 
+
 ### Compute the parameters and FLOPs
+
 If you have install [thop](https://github.com/Lyken17/pytorch-OpCounter), you can `paras_flops.py` to compute the parameters and FLOPs of our models. The usage is below:
 ```
 python paras_flops.py -a {model_name}
 ```
 
 More examples are shown in [examples.md](docs/examples.md).
+
 
 ## Experiments
 
