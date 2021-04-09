@@ -1,4 +1,6 @@
-### Examples
+## Examples
+
+### Training
 
 #### Use single node or multi node with multiple GPUs
 
