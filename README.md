@@ -128,3 +128,7 @@ If you have install [thop](https://github.com/Lyken17/pytorch-OpCounter), you ca
 ```
 python paras_flops.py -a {model_name}
 ```
+
+## Experiments
+
+[experiments.md](docs/experiments.md)
