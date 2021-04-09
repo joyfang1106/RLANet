@@ -347,6 +347,7 @@ def rla_resnet50(rla_channel=32):
     """ Constructs a RLA_ResNet-50 model.
     default: 
         num_classes=1000, rla_channel=32, SE=False, ECA=None
+    ECA: a list of kernel sizes in ECA
     """
     print("Constructing rla_resnet50......")
     model = RLA_ResNet(RLA_Bottleneck, [3, 4, 6, 3])
@@ -459,3 +460,4 @@ def rla_resnext101_32x4d_eca(rla_channel=32, k_size=[5, 5, 5, 7]):
     print("Constructing rla_resnext101_32x4d_eca......")
     model = RLA_ResNet(RLA_Bottleneck, [3, 4, 23, 3], ECA=k_size, groups=32, width_per_group=4)
     return model
+

@@ -3,8 +3,9 @@ import torch.nn as nn
 from torch import Tensor
 from typing import Callable, Any, Optional, List
 
-__all__ = ['dsRLA_MobileNetV2', 'dsrla_mobilenetv2', 
-           'dsrla_mobilenetv2_k6', 'dsrla_mobilenetv2_k12', 'dsrla_mobilenetv2_k32'
+__all__ = ['dsRLA_MobileNetV2', 'dsrla_mobilenetv2', 'dsrla_mobilenetv2_eca', 
+           'dsrla_mobilenetv2_k6', 'dsrla_mobilenetv2_k12', 'dsrla_mobilenetv2_k32',
+           'dsrla_mobilenetv2_k6_eca', 'dsrla_mobilenetv2_k12_eca', 'dsrla_mobilenetv2_k32_eca'
            ]
 
 
@@ -21,6 +22,36 @@ def recurrent_dsconv(in_planes, out_planes, groups):
     """3x3 deepwise separable convolution with padding"""
     return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=1, padding=1, groups=groups, bias=False)
 
+
+# from eca_module import eca_layer
+class eca_layer(nn.Module):
+    """Constructs a ECA module.
+    Args:
+        channel: Number of channels of the input feature map
+        k_size: Adaptive selection of kernel size
+        source: https://github.com/BangguWu/ECANet
+    """
+    def __init__(self, channel, k_size=3):
+        super(eca_layer, self).__init__()
+        self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        self.conv = nn.Conv1d(1, 1, kernel_size=k_size, padding=(k_size - 1) // 2, bias=False) 
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x):
+        # x: input features with shape [b, c, h, w]
+        b, c, h, w = x.size()
+
+        # feature descriptor on the global spatial information
+        y = self.avg_pool(x)
+
+        # Two different branches of ECA module
+        y = self.conv(y.squeeze(-1).transpose(-1, -2)).transpose(-1, -2).unsqueeze(-1)
+
+        # Multi-scale information fusion
+        y = self.sigmoid(y)
+
+        return x * y.expand_as(x)
+    
 
 def _make_divisible(v: float, divisor: int, min_value: Optional[int] = None) -> int:
     """
@@ -70,7 +101,8 @@ class InvertedResidual(nn.Module):
         stride: int,
         expand_ratio: int,
         rla_channel: int,
-        norm_layer: Optional[Callable[..., nn.Module]] = None
+        norm_layer: Optional[Callable[..., nn.Module]] = None, 
+        ECA_ksize = None
     ) -> None:
         super(InvertedResidual, self).__init__()
         self.stride = stride
@@ -99,6 +131,11 @@ class InvertedResidual(nn.Module):
             nn.Conv2d(hidden_rla, oup, 1, 1, 0, bias=False),
             norm_layer(oup),
         ])
+        
+        self.eca_ksize = ECA_ksize
+        if ECA_ksize != None:
+            layers.append(eca_layer(oup, ECA_ksize))
+            
         self.conv = nn.Sequential(*layers)
 
         self.averagePooling = None
@@ -136,7 +173,8 @@ class dsRLA_MobileNetV2(nn.Module):
         inverted_residual_setting: Optional[List[List[int]]] = None,
         round_nearest: int = 8,
         block: Optional[Callable[..., nn.Module]] = None,
-        norm_layer: Optional[Callable[..., nn.Module]] = None
+        norm_layer: Optional[Callable[..., nn.Module]] = None, 
+        ECA = False
     ) -> None:
         """
         MobileNet V2 main class
@@ -206,8 +244,17 @@ class dsRLA_MobileNetV2(nn.Module):
             stage_bns[j] = nn.ModuleList([norm_layer(rla_channel) for _ in range(n)])
             conv_outs[j] = conv_out(output_channel, rla_channel)
             for i in range(n):
+                if ECA:
+                    if c < 96:
+                        ECA_ksize = 1
+                    else:
+                        ECA_ksize = 3
+                else:
+                    ECA_ksize = None
                 stride = s if i == 0 else 1
-                stages[j].append(block(input_channel, output_channel, stride, expand_ratio=t, rla_channel=rla_channel, norm_layer=norm_layer))
+                stages[j].append(block(input_channel, output_channel, stride, expand_ratio=t, 
+                                       rla_channel=rla_channel, norm_layer=norm_layer, 
+                                       ECA_ksize=ECA_ksize))
                 input_channel = output_channel
             stages[j] = nn.ModuleList(stages[j])
             j += 1
@@ -308,36 +355,72 @@ class dsRLA_MobileNetV2(nn.Module):
 def dsrla_mobilenetv2(rla_channel=32):
     """ Constructs a RLA_MobileNetV2 model.
     default: 
-        rla_channel = 32
+        rla_channel = 32, ECA=False
     """
     print("Constructing dsrla_mobilenetv2......")
     model = dsRLA_MobileNetV2(rla_channel=rla_channel)
     return model
 
+def dsrla_mobilenetv2_eca(rla_channel=32, eca=True):
+    """ Constructs a RLA_MobileNetV2 model.
+    default: 
+        rla_channel = 32, ECA=False
+    """
+    print("Constructing dsrla_mobilenetv2_eca......")
+    model = dsRLA_MobileNetV2(rla_channel=rla_channel, ECA=eca)
+    return model
+
 def dsrla_mobilenetv2_k6():
     """ Constructs a RLA_MobileNetV2 model.
     default: 
-        rla_channel = 32
+        rla_channel = 32, ECA=False
     """
     print("Constructing dsrla_mobilenetv2_k6......")
     model = dsRLA_MobileNetV2(rla_channel=6)
     return model
 
+def dsrla_mobilenetv2_k6_eca(eca=True):
+    """ Constructs a RLA_MobileNetV2 model.
+    default: 
+        rla_channel = 32, ECA=False
+    """
+    print("Constructing dsrla_mobilenetv2_k6_eca......")
+    model = dsRLA_MobileNetV2(rla_channel=6, ECA=eca)
+    return model
+
 def dsrla_mobilenetv2_k12():
     """ Constructs a RLA_MobileNetV2 model.
     default: 
-        rla_channel = 32
+        rla_channel = 32, ECA=False
     """
     print("Constructing dsrla_mobilenetv2_k12......")
     model = dsRLA_MobileNetV2(rla_channel=12)
     return model
 
+def dsrla_mobilenetv2_k12_eca(eca=True):
+    """ Constructs a RLA_MobileNetV2 model.
+    default: 
+        rla_channel = 32, ECA=False
+    """
+    print("Constructing dsrla_mobilenetv2_k12_eca......")
+    model = dsRLA_MobileNetV2(rla_channel=12, ECA=eca)
+    return model
+
 def dsrla_mobilenetv2_k32():
     """ Constructs a RLA_MobileNetV2 model.
     default: 
-        rla_channel = 32
+        rla_channel = 32, ECA=False
     """
     print("Constructing dsrla_mobilenetv2_k32......")
     model = dsRLA_MobileNetV2(rla_channel=32)
+    return model
+
+def dsrla_mobilenetv2_k32_eca(eca=True):
+    """ Constructs a RLA_MobileNetV2 model.
+    default: 
+        rla_channel = 32, ECA=False
+    """
+    print("Constructing dsrla_mobilenetv2_k32_eca......")
+    model = dsRLA_MobileNetV2(rla_channel=32, ECA=eca)
     return model
 

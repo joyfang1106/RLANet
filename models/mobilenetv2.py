@@ -4,7 +4,7 @@ from torch import Tensor
 from typing import Callable, Any, Optional, List
 
 
-__all__ = ['MobileNetV2', 'mobilenet_v2'
+__all__ = ['MobileNetV2', 'mobilenet_v2', 'mobilenetv2_eca'
            ]
 
 
@@ -12,6 +12,36 @@ model_urls = {
     'mobilenet_v2': 'https://download.pytorch.org/models/mobilenet_v2-b0353104.pth',
 }
 
+
+# from eca_module import eca_layer
+class eca_layer(nn.Module):
+    """Constructs a ECA module.
+    Args:
+        channel: Number of channels of the input feature map
+        k_size: Adaptive selection of kernel size
+        source: https://github.com/BangguWu/ECANet
+    """
+    def __init__(self, channel, k_size=3):
+        super(eca_layer, self).__init__()
+        self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        self.conv = nn.Conv1d(1, 1, kernel_size=k_size, padding=(k_size - 1) // 2, bias=False) 
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x):
+        # x: input features with shape [b, c, h, w]
+        b, c, h, w = x.size()
+
+        # feature descriptor on the global spatial information
+        y = self.avg_pool(x)
+
+        # Two different branches of ECA module
+        y = self.conv(y.squeeze(-1).transpose(-1, -2)).transpose(-1, -2).unsqueeze(-1)
+
+        # Multi-scale information fusion
+        y = self.sigmoid(y)
+
+        return x * y.expand_as(x)
+    
 
 def _make_divisible(v: float, divisor: int, min_value: Optional[int] = None) -> int:
     """
@@ -60,7 +90,8 @@ class InvertedResidual(nn.Module):
         oup: int,
         stride: int,
         expand_ratio: int,
-        norm_layer: Optional[Callable[..., nn.Module]] = None
+        norm_layer: Optional[Callable[..., nn.Module]] = None, 
+        ECA_ksize = None
     ) -> None:
         super(InvertedResidual, self).__init__()
         self.stride = stride
@@ -83,6 +114,11 @@ class InvertedResidual(nn.Module):
             nn.Conv2d(hidden_dim, oup, 1, 1, 0, bias=False),
             norm_layer(oup),
         ])
+        
+        self.eca_ksize = ECA_ksize
+        if ECA_ksize != None:
+            layers.append(eca_layer(oup, ECA_ksize))
+            
         self.conv = nn.Sequential(*layers)
 
     def forward(self, x: Tensor) -> Tensor:
@@ -100,7 +136,8 @@ class MobileNetV2(nn.Module):
         inverted_residual_setting: Optional[List[List[int]]] = None,
         round_nearest: int = 8,
         block: Optional[Callable[..., nn.Module]] = None,
-        norm_layer: Optional[Callable[..., nn.Module]] = None
+        norm_layer: Optional[Callable[..., nn.Module]] = None, 
+        ECA = False
     ) -> None:
         """
         MobileNet V2 main class
@@ -152,8 +189,16 @@ class MobileNetV2(nn.Module):
         for t, c, n, s in inverted_residual_setting:
             output_channel = _make_divisible(c * width_mult, round_nearest)
             for i in range(n):
+                if ECA:
+                    if c < 96:
+                        ECA_ksize = 1
+                    else:
+                        ECA_ksize = 3
+                else:
+                    ECA_ksize = None
                 stride = s if i == 0 else 1
-                features.append(block(input_channel, output_channel, stride, expand_ratio=t, norm_layer=norm_layer))
+                features.append(block(input_channel, output_channel, stride, expand_ratio=t, 
+                                      norm_layer=norm_layer, ECA_ksize=ECA_ksize))
                 input_channel = output_channel
         
         # building last several layers
@@ -198,7 +243,18 @@ def mobilenet_v2(**kwargs: Any) -> MobileNetV2:
     Constructs a MobileNetV2 architecture from
     `"MobileNetV2: Inverted Residuals and Linear Bottlenecks" <https://arxiv.org/abs/1801.04381>`_.
     """
+    print("Constructing mobilenetv2......")
     model = MobileNetV2(**kwargs)
+    return model
+
+
+def mobilenetv2_eca(eca=True):
+    """
+    default: 
+        ECA=False
+    """
+    print("Constructing mobilenetv2_eca......")
+    model = MobileNetV2(ECA=eca)
     return model
 
 

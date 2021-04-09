@@ -281,6 +281,7 @@ def resnet50():
     """ Constructs a ResNet-50 model.
     default: 
         num_classes=1000, SE=False, ECA=None
+    ECA: a list of kernel sizes in ECA
     """
     print("Constructing resnet50......")
     model = ResNet(Bottleneck, [3, 4, 6, 3])
@@ -418,4 +419,5 @@ def resnext101_32x4d_eca(k_size=[5, 5, 5, 7]):
     print("Constructing resnext101_32x4d_eca......")
     model = ResNet(Bottleneck, [3, 4, 23, 3], ECA=k_size, groups=32, width_per_group=4)
     return model
+    
     
