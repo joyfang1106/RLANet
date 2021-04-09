@@ -103,23 +103,14 @@ Use multi-processing distributed training to launch N processes per node, which 
   python best.py --log-dir {log_folder}
   ```
 
-  Example:
-  ```bash
-  python best.py --log-dir rla_resnet50_
-  ```
-  
+
 ### Visualizing the training result
 
-1. To generate acc_plot, loss_plot
+To generate acc_plot, loss_plot
   ```
   python eval_visual.py --log-dir {log_folder}
   ```
   
-  Example:
-  ```bash
-  python eval_visual.py --log-dir rla_resnet50_
-  ```
-
 ### Train with MobileNet_v2
 It is same with above ResNet replace `train.py` by `train_light.py`.
 
