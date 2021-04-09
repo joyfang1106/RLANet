@@ -73,13 +73,14 @@ Use multi-processing distributed training to launch N processes per node, which 
 
 2. To train an RLA-Net base on a checkpoint using 2 specified GPUs
   ```bash
+  CUDA_VISIBLE_DEVICES={device_ids} python train.py -a {model_name} --b {batch_size} --multiprocessing-distributed --world-size 1 --rank 0 --resume {path to latest checkpoint} {imagenet-folder with train and val folders}
+  ```
+  
+  Example:
+  ```bash
   CUDA_VISIBLE_DEVICES=0,1 python train.py -a rla_resnet50 --b 256 --multiprocessing-distributed --world-size 1 --rank 0 --resume='work_dirs/rla_resnet50_/checkpoint.pth.tar' '/dev/shm/imagenet/'
   ```
 
-  Example:
-  ```bash
-  CUDA_VISIBLE_DEVICES={device_ids} python train.py -a {model_name} --b {batch_size} --multiprocessing-distributed --world-size 1 --rank 0 --resume {path to latest checkpoint} {imagenet-folder with train and val folders}
-  ```
 
 ### Testing
 
