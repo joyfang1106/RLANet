@@ -33,7 +33,7 @@ Please refer to [get_started.md](docs/get_started.md) for more details about ins
 
 ## Quick Start
 
-### Training
+### Train with ResNet
 
 #### Use single node or multi node with multiple GPUs
 
@@ -83,3 +83,12 @@ Use multi-processing distributed training to launch N processes per node, which 
   ```bash
   python eval_visual.py --log-dir rla_resnet50_
   ```
+
+### Train with MobileNet_v2
+It is same with above ResNet replace `train.py` by `train_light.py`.
+
+### Compute the parameters and FLOPs
+If you have install [thop](https://github.com/Lyken17/pytorch-OpCounter), you can `paras_flosp.py` to compute the parameters and FLOPs of our models. The usage is below:
+```
+python paras_flops.py -a {model_name}
+```
