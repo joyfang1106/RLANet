@@ -122,4 +122,4 @@ python paras_flops.py -a {model_name}
 
 ## Experiments
 
-[experiments.md](docs/experiments.md)
+The results are shown in [experiments.md](docs/experiments.md).
