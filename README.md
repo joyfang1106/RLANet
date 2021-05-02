@@ -17,7 +17,7 @@ This paper proposes a recurrent layer aggregation (RLA) module that makes use of
 ## Changelog
 
 - 2021/04/06 Upload RLA-ResNet model.
-- TO DO: MobileNetV2 model.
+- 2021/04/16 Upload RLA-MobileNetV2 (depthwise separable conv version) model.
 
 ## Installation
 
