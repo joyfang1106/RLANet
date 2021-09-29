@@ -95,12 +95,12 @@ Download ImageNet dataset from official website in your local directory.
 Or put this dataset into your memory if the speed of reading and writing to the disk is too slow.
 
 ```shell
-# root执行以下操作
+# root
 mkdir /shm
 chmod 777 /shm
 mount -t tmpfs -o size=160G tmpfs /shm
 
-# user执行以下操作
+# user
 mkdir /shm/imagenet
 tar -xf ~/imagenet_PP_NoTest.tar -C /shm/imagenet/ --checkpoint=100000 # 1GB per chkpt, total ~150G
 ```
