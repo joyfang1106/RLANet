@@ -203,33 +203,6 @@ class ResNet(nn.Module):
 
 
 #=========================== available models ============================
-# resnet_models = dict(
-#     resnet50 = ResNet(Bottleneck, [3, 4, 6, 3]),
-#     resnet50_se = ResNet(Bottleneck, [3, 4, 6, 3], SE=True),
-#     # resnet50_eca = ResNet(Bottleneck, [3, 4, 6, 3], ECA=[3, 3, 3, 3]),
-#     resnet50_adeca = ResNet(Bottleneck, [3, 4, 6, 3], ECA=[5, 5, 5, 7]),
-    
-#     resnet101 = ResNet(Bottleneck, [3, 4, 23, 3]),
-#     resnet101_se = ResNet(Bottleneck, [3, 4, 23, 3], SE=True),
-#     # resnet101_eca = ResNet(Bottleneck, [3, 4, 23, 3], ECA=[3, 3, 3, 3]),
-#     resnet101_adeca = ResNet(Bottleneck, [3, 4, 23, 3], ECA=[5, 5, 5, 7]),
-    
-#     resnet152 = ResNet(Bottleneck, [3, 8, 36, 3]),
-#     resnet152_se = ResNet(Bottleneck, [3, 8, 36, 3], SE=True),
-#     # resnet152_eca = ResNet(Bottleneck, [3, 8, 36, 3], ECA=[3, 3, 3, 3]),
-#     resnet152_adeca = ResNet(Bottleneck, [3, 8, 36, 3], ECA=[5, 5, 5, 7]),
-    
-#     resnext50_32x4d = ResNet(Bottleneck, [3, 4, 6, 3], groups=32, width_per_group=4),
-#     resnext50_32x4d_se = ResNet(Bottleneck, [3, 4, 6, 3], SE=True, groups=32, width_per_group=4),
-#     # resnext50_32x4d_eca = ResNet(Bottleneck, [3, 4, 6, 3], ECA=[3, 3, 3, 3], groups=32, width_per_group=4),
-#     resnext50_32x4d_adeca = ResNet(Bottleneck, [3, 4, 6, 3], ECA=[5, 5, 5, 7], groups=32, width_per_group=4),
-    
-#     resnext101_32x4d = ResNet(Bottleneck, [3, 4, 23, 3], groups=32, width_per_group=4),
-#     resnext101_32x4d_se = ResNet(Bottleneck, [3, 4, 23, 3], SE=True, groups=32, width_per_group=4),
-#     # resnext101_32x4d_eca = ResNet(Bottleneck, [3, 4, 23, 3], ECA=[3, 3, 3, 3], groups=32, width_per_group=4),
-#     resnext101_32x4d_adeca = ResNet(Bottleneck, [3, 4, 23, 3], ECA=[5, 5, 5, 7], groups=32, width_per_group=4),
-# )
-
 
 def resnet50():
     """ Constructs a ResNet-50 model.
