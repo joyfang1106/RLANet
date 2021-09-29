@@ -1,29 +1,9 @@
-# This piece of code is developed based on
-# https://github.com/pytorch/examples/tree/master/imagenet
 import torch
 import torch.nn as nn
 from .eca_module import eca_layer
 from .se_module import SELayer
 
 
-__all__ = ['RLA_ResNet', 'rla_resnet50', 'rla_resnet50_eca',
-           'rla_resnet101', 'rla_resnet101_eca',
-           'rla_resnet152', 'rla_resnet152_eca',
-           'rla_resnext50_32x4d', 'rla_resnext50_32x4d_se', 'rla_resnext50_32x4d_eca',
-           'rla_resnext101_32x4d', 'rla_resnext101_32x4d_se', 'rla_resnext101_32x4d_eca'
-           ]
-
-model_urls = {
-    'resnet50': 'https://download.pytorch.org/models/resnet50-19c8e357.pth',
-    'resnet101': 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth',
-    'resnet152': 'https://download.pytorch.org/models/resnet152-b121ed2d.pth',
-    'resnext50_32x4d': 'https://download.pytorch.org/models/resnext50_32x4d-7cdf4587.pth',
-    'resnext101_32x8d': 'https://download.pytorch.org/models/resnext101_32x8d-8ba56ff5.pth',
-}
-
-
-
-# RLA channel k: rla_channel = 32 (default)
 
 def conv3x3(in_planes, out_planes, stride=1, groups=1, dilation=1):
     """3x3 convolution with padding"""
@@ -45,7 +25,6 @@ class RLA_Bottleneck(nn.Module):
         super(RLA_Bottleneck, self).__init__()
         if norm_layer is None:
             norm_layer = nn.BatchNorm2d
-        # `planes * base_width / 64 * cardinality`
         width = int(planes * (base_width / 64.)) * groups
         # Both self.conv2 and self.downsample layers downsample the input when stride != 1
         self.conv1 = conv1x1(inplanes + rla_channel, width)
@@ -114,7 +93,7 @@ class RLA_ResNet(nn.Module):
     '''
     def __init__(self, block, layers, num_classes=1000, 
                  rla_channel=32, SE=False, ECA=None, 
-                 zero_init_last_bn=True, #zero_init_residual=False,
+                 zero_init_residual=False,
                  groups=1, width_per_group=64, replace_stride_with_dilation=None,
                  norm_layer=None):
         super(RLA_ResNet, self).__init__()
@@ -188,8 +167,7 @@ class RLA_ResNet(nn.Module):
         # Zero-initialize the last BN in each residual branch,
         # so that the residual branch starts with zeros, and each residual block behaves like an identity.
         # This improves the model by 0.2~0.3% according to https://arxiv.org/abs/1706.02677
-        if zero_init_last_bn:
-        # if zero_init_residual:
+        if zero_init_residual:
             for m in self.modules():
                 if isinstance(m, RLA_Bottleneck):
                     nn.init.constant_(m.bn3.weight, 0)
@@ -255,6 +233,7 @@ class RLA_ResNet(nn.Module):
         
         h = self.bn2(h)
         h = self.relu(h)
+        
         x = torch.cat((x, h), dim=1)
         
         x = self.avgpool(x)
@@ -267,7 +246,7 @@ class RLA_ResNet(nn.Module):
         return self._forward_impl(x)
 
 
-#=========================== available models ============================
+
 def rla_resnet50(rla_channel=32):
     """ Constructs a RLA_ResNet-50 model.
     default: 
@@ -278,111 +257,5 @@ def rla_resnet50(rla_channel=32):
     model = RLA_ResNet(RLA_Bottleneck, [3, 4, 6, 3])
     return model
 
-def rla_resnet50_eca(rla_channel=32, k_size=[5, 5, 5, 7]):
-    """Constructs a RLA_ResNet-50_ECA model.
-    Args:
-        k_size: Adaptive selection of kernel size
-        rla_channel: the number of filters of the shared(recurrent) conv in RLA
-    """
-    print("Constructing rla_resnet50_eca......")
-    model = RLA_ResNet(RLA_Bottleneck, [3, 4, 6, 3], rla_channel=rla_channel, ECA=k_size)
-    return model
 
-
-def rla_resnet101(rla_channel=32):
-    """ Constructs a RLA_ResNet-101 model.
-    default: 
-        num_classes=1000, rla_channel=32, SE=False, ECA=None
-    """
-    print("Constructing rla_resnet101......")
-    model = RLA_ResNet(RLA_Bottleneck, [3, 4, 23, 3])
-    return model
-
-def rla_resnet101_eca(rla_channel=32, k_size=[5, 5, 5, 7]):
-    """Constructs a RLA_ResNet-101_ECA model.
-    Args:
-        k_size: Adaptive selection of kernel size
-        rla_channel: the number of filters of the shared(recurrent) conv in RLA
-    """
-    print("Constructing rla_resnet101_eca......")
-    model = RLA_ResNet(RLA_Bottleneck, [3, 4, 23, 3], ECA=k_size)
-    return model
-
-
-def rla_resnet152(rla_channel=32):
-    """ Constructs a RLA_ResNet-152 model.
-    default: 
-        num_classes=1000, rla_channel=32, SE=False, ECA=None
-    """
-    print("Constructing rla_resnet152......")
-    model = RLA_ResNet(RLA_Bottleneck, [3, 8, 36, 3])
-    return model
-
-def rla_resnet152_eca(rla_channel=32, k_size=[5, 5, 5, 7]):
-    """Constructs a RLA_ResNet-101_ECA model.
-    Args:
-        k_size: Adaptive selection of kernel size
-        rla_channel: the number of filters of the shared(recurrent) conv in RLA
-    """
-    print("Constructing rla_resnet101_eca......")
-    model = RLA_ResNet(RLA_Bottleneck, [3, 8, 36, 3], ECA=k_size)
-    return model
-
-
-def rla_resnext50_32x4d(rla_channel=32):
-    """ Constructs a RLA_ResNeXt50_32x4d model.
-    default: 
-        num_classes=1000, rla_channel=32, SE=False, ECA=None
-    """
-    print("Constructing rla_resnext50_32x4d......")
-    model = RLA_ResNet(RLA_Bottleneck, [3, 4, 6, 3], groups=32, width_per_group=4)
-    return model
-
-def rla_resnext50_32x4d_se(rla_channel=32):
-    """ Constructs a RLA_ResNeXt50_32x4d_SE model.
-    default: 
-        num_classes=1000, rla_channel=32, SE=False, ECA=None
-    """
-    print("Constructing rla_resnext50_32x4d_se......")
-    model = RLA_ResNet(RLA_Bottleneck, [3, 4, 6, 3], SE=True, groups=32, width_per_group=4)
-    return model
-
-def rla_resnext50_32x4d_eca(rla_channel=32, k_size=[5, 5, 5, 7]): 
-    """Constructs a RLA_ResNeXt50_32x4d_ECA model.
-    Args:
-        k_size: Adaptive selection of kernel size
-        rla_channel: the number of filters of the shared(recurrent) conv in RLA
-    """
-    print("Constructing rla_resnext50_32x4d_eca......")
-    model = RLA_ResNet(RLA_Bottleneck, [3, 4, 6, 3], ECA=k_size, groups=32, width_per_group=4)
-    return model
-
-
-def rla_resnext101_32x4d(rla_channel=32):
-    """ Constructs a RLA_ResNeXt101_32x4d model.
-    default: 
-        num_classes=1000, rla_channel=32, SE=False, ECA=None
-    """
-    print("Constructing rla_resnext101_32x4d......")
-    model = RLA_ResNet(RLA_Bottleneck, [3, 4, 23, 3], groups=32, width_per_group=4)
-    return model
-
-def rla_resnext101_32x4d_se(rla_channel=32):
-    """ Constructs a RLA_ResNeXt101_32x4d_SE model.
-    default: 
-        num_classes=1000, rla_channel=32, SE=False, ECA=None
-    """
-    print("Constructing rla_resnext101_32x4d_se......")
-    model = RLA_ResNet(RLA_Bottleneck, [3, 4, 23, 3], SE=True, groups=32, width_per_group=4)
-    return model
-
-def rla_resnext101_32x4d_eca(rla_channel=32, k_size=[5, 5, 5, 7]): 
-    """Constructs a RLA_ResNeXt101_32x4d_ECA model.
-    Args:
-        k_size: Adaptive selection of kernel size
-        rla_channel: the number of filters of the shared(recurrent) conv in RLA
-    """
-    print("Constructing rla_resnext101_32x4d_eca......")
-    model = RLA_ResNet(RLA_Bottleneck, [3, 4, 23, 3], ECA=k_size, groups=32, width_per_group=4)
-    return model
 

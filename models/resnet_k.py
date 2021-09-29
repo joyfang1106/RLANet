@@ -1,24 +1,20 @@
-# This piece of code is developed based on
-# https://github.com/pytorch/examples/tree/master/imagenet
+'''
+directly add k(32) channels in kernels of ResNet
+'''
+
 import torch
 import torch.nn as nn
 from .eca_module import eca_layer
 from .se_module import SELayer
 
 
-__all__ = ['ResNet', 'resnet50', 'resnet50_se', 'resnet50_eca',
-           'resnet101', 'resnet101_se', 'resnet101_eca',
-           'resnet152', 'resnet152_se', 'resnet152_eca',
-           'resnext50_32x4d', 'resnext50_32x4d_se', 'resnext50_32x4d_eca',
-           'resnext101_32x4d', 'resnext101_32x4d_se', 'resnext101_32x4d_eca'
+
+__all__ = ['ResNet_k', 
+           'resnet50_k'
            ]
 
 model_urls = {
     'resnet50': 'https://download.pytorch.org/models/resnet50-19c8e357.pth',
-    'resnet101': 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth',
-    'resnet152': 'https://download.pytorch.org/models/resnet152-b121ed2d.pth',
-    'resnext50_32x4d': 'https://download.pytorch.org/models/resnext50_32x4d-7cdf4587.pth',
-    'resnext101_32x8d': 'https://download.pytorch.org/models/resnext101_32x8d-8ba56ff5.pth',
 }
 
 
@@ -94,20 +90,22 @@ class Bottleneck(nn.Module):
     
     
 #=========================== define network ============================
-class ResNet(nn.Module):
+class ResNet_k(nn.Module):
 
     def __init__(self, block, layers, num_classes=1000, 
-                 SE=False, ECA=None, 
+                 SE=False, ECA=None, channel_k=32, 
                  zero_init_last_bn=True, #zero_init_residual=False,
                  groups=1, width_per_group=64, replace_stride_with_dilation=None,
                  norm_layer=None):
-        super(ResNet, self).__init__()
+        super(ResNet_k, self).__init__()
         if norm_layer is None:
             norm_layer = nn.BatchNorm2d
         self._norm_layer = norm_layer
         
         self.inplanes = 64
         self.dilation = 1
+        self.expansion = 4
+        
         if replace_stride_with_dilation is None:
             # each element in the tuple indicates if we should replace
             # the 2x2 stride with a dilated convolution instead
@@ -128,15 +126,18 @@ class ResNet(nn.Module):
         self.bn1 = norm_layer(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
-        self.layer1 = self._make_layer(block, 64, layers[0], SE, ECA[0])
-        self.layer2 = self._make_layer(block, 128, layers[1], SE, ECA[1], stride=2,
+        
+        add_k = int(channel_k / self.expansion) # 8
+        
+        self.layer1 = self._make_layer(block, 64+add_k, layers[0], SE, ECA[0])
+        self.layer2 = self._make_layer(block, 128+add_k, layers[1], SE, ECA[1], stride=2,
                                        dilate=replace_stride_with_dilation[0])
-        self.layer3 = self._make_layer(block, 256, layers[2], SE, ECA[2], stride=2,
+        self.layer3 = self._make_layer(block, 256+add_k, layers[2], SE, ECA[2], stride=2,
                                        dilate=replace_stride_with_dilation[1])
-        self.layer4 = self._make_layer(block, 512, layers[3], SE, ECA[3], stride=2,
+        self.layer4 = self._make_layer(block, 512+add_k, layers[3], SE, ECA[3], stride=2,
                                        dilate=replace_stride_with_dilation[2])
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        self.fc = nn.Linear(512 * block.expansion, num_classes)
+        self.fc = nn.Linear((512+add_k) * block.expansion, num_classes)
             
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -203,175 +204,17 @@ class ResNet(nn.Module):
 
 
 #=========================== available models ============================
-# resnet_models = dict(
-#     resnet50 = ResNet(Bottleneck, [3, 4, 6, 3]),
-#     resnet50_se = ResNet(Bottleneck, [3, 4, 6, 3], SE=True),
-#     # resnet50_eca = ResNet(Bottleneck, [3, 4, 6, 3], ECA=[3, 3, 3, 3]),
-#     resnet50_adeca = ResNet(Bottleneck, [3, 4, 6, 3], ECA=[5, 5, 5, 7]),
-    
-#     resnet101 = ResNet(Bottleneck, [3, 4, 23, 3]),
-#     resnet101_se = ResNet(Bottleneck, [3, 4, 23, 3], SE=True),
-#     # resnet101_eca = ResNet(Bottleneck, [3, 4, 23, 3], ECA=[3, 3, 3, 3]),
-#     resnet101_adeca = ResNet(Bottleneck, [3, 4, 23, 3], ECA=[5, 5, 5, 7]),
-    
-#     resnet152 = ResNet(Bottleneck, [3, 8, 36, 3]),
-#     resnet152_se = ResNet(Bottleneck, [3, 8, 36, 3], SE=True),
-#     # resnet152_eca = ResNet(Bottleneck, [3, 8, 36, 3], ECA=[3, 3, 3, 3]),
-#     resnet152_adeca = ResNet(Bottleneck, [3, 8, 36, 3], ECA=[5, 5, 5, 7]),
-    
-#     resnext50_32x4d = ResNet(Bottleneck, [3, 4, 6, 3], groups=32, width_per_group=4),
-#     resnext50_32x4d_se = ResNet(Bottleneck, [3, 4, 6, 3], SE=True, groups=32, width_per_group=4),
-#     # resnext50_32x4d_eca = ResNet(Bottleneck, [3, 4, 6, 3], ECA=[3, 3, 3, 3], groups=32, width_per_group=4),
-#     resnext50_32x4d_adeca = ResNet(Bottleneck, [3, 4, 6, 3], ECA=[5, 5, 5, 7], groups=32, width_per_group=4),
-    
-#     resnext101_32x4d = ResNet(Bottleneck, [3, 4, 23, 3], groups=32, width_per_group=4),
-#     resnext101_32x4d_se = ResNet(Bottleneck, [3, 4, 23, 3], SE=True, groups=32, width_per_group=4),
-#     # resnext101_32x4d_eca = ResNet(Bottleneck, [3, 4, 23, 3], ECA=[3, 3, 3, 3], groups=32, width_per_group=4),
-#     resnext101_32x4d_adeca = ResNet(Bottleneck, [3, 4, 23, 3], ECA=[5, 5, 5, 7], groups=32, width_per_group=4),
-# )
 
-
-def resnet50():
+def resnet50_k(channel_k=32):
     """ Constructs a ResNet-50 model.
     default: 
         num_classes=1000, SE=False, ECA=None
     ECA: a list of kernel sizes in ECA
     """
-    print("Constructing resnet50......")
-    model = ResNet(Bottleneck, [3, 4, 6, 3])
-    return model
-
-def resnet50_se():
-    """ Constructs a ResNet-50_SE model.
-    default: 
-        num_classes=1000, SE=False, ECA=None
-    """
-    print("Constructing resnet50_se......")
-    model = ResNet(Bottleneck, [3, 4, 6, 3], SE=True)
-    return model
-
-def resnet50_eca(k_size=[5, 5, 5, 7]): # pretrained=False
-    """Constructs a ResNet-50_ECA model.
-    Args:
-        k_size: Adaptive selection of kernel size
-        num_classes:The classes of classification
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-    """
-    print("Constructing resnet50_eca......")
-    # model = ResNet(ECABottleneck, [3, 4, 6, 3], num_classes=num_classes, k_size=k_size)
-    model = ResNet(Bottleneck, [3, 4, 6, 3], ECA=k_size)
+    print("Constructing resnet50_k......")
+    model = ResNet_k(Bottleneck, [3, 4, 6, 3], channel_k=channel_k)
     return model
 
 
-def resnet101():
-    """ Constructs a ResNet-101 model.
-    default: 
-        num_classes=1000, SE=False, ECA=None
-    """
-    print("Constructing resnet101......")
-    model = ResNet(Bottleneck, [3, 4, 23, 3])
-    return model
-
-def resnet101_se():
-    """ Constructs a ResNet-101_SE model.
-    default: 
-        num_classes=1000, SE=False, ECA=None
-    """
-    print("Constructing resnet101_se......")
-    model = ResNet(Bottleneck, [3, 4, 23, 3], SE=True)
-    return model
-
-def resnet101_eca(k_size=[5, 5, 5, 7]): 
-    """Constructs a ResNet-101_ECA model.
-    Args:
-        k_size: Adaptive selection of kernel size
-    """
-    print("Constructing resnet101_eca......")
-    model = ResNet(Bottleneck, [3, 4, 23, 3], ECA=k_size)
-    return model
-
-
-def resnet152():
-    """ Constructs a ResNet-152 model.
-    default: 
-        num_classes=1000, SE=False, ECA=None
-    """
-    print("Constructing resnet152......")
-    model = ResNet(Bottleneck, [3, 8, 36, 3])
-    return model
-
-def resnet152_se():
-    """ Constructs a ResNet-152_SE model.
-    default: 
-        num_classes=1000, SE=False, ECA=None
-    """
-    print("Constructing resnet152_se......")
-    model = ResNet(Bottleneck, [3, 8, 36, 3], SE=True)
-    return model
-
-def resnet152_eca(k_size=[5, 5, 5, 7]): 
-    """Constructs a ResNet-152_ECA model.
-    Args:
-        k_size: Adaptive selection of kernel size
-    """
-    print("Constructing resnet152_eca......")
-    model = ResNet(Bottleneck, [3, 8, 36, 3], ECA=k_size)
-    return model
-
-
-def resnext50_32x4d():
-    """ Constructs a ResNeXt50_32x4d model.
-    default: 
-        num_classes=1000, SE=False, ECA=None
-    """
-    print("Constructing resnext50_32x4d......")
-    model = ResNet(Bottleneck, [3, 4, 6, 3], groups=32, width_per_group=4)
-    return model
-
-def resnext50_32x4d_se():
-    """ Constructs a ResNeXt50_32x4d_SE model.
-    default: 
-        num_classes=1000, SE=False, ECA=None
-    """
-    print("Constructing resnext50_32x4d_se......")
-    model = ResNet(Bottleneck, [3, 4, 6, 3], SE=True, groups=32, width_per_group=4)
-    return model
-
-def resnext50_32x4d_eca(k_size=[5, 5, 5, 7]): 
-    """Constructs a ResNeXt50_32x4d_ECA model.
-    Args:
-        k_size: Adaptive selection of kernel size
-    """
-    print("Constructing resnext50_32x4d_eca......")
-    model = ResNet(Bottleneck, [3, 4, 6, 3], ECA=k_size, groups=32, width_per_group=4)
-    return model
-
-
-def resnext101_32x4d():
-    """ Constructs a ResNeXt101_32x4d model.
-    default: 
-        num_classes=1000, SE=False, ECA=None
-    """
-    print("Constructing resnext101_32x4d......")
-    model = ResNet(Bottleneck, [3, 4, 23, 3], groups=32, width_per_group=4)
-    return model
-
-def resnext101_32x4d_se():
-    """ Constructs a ResNeXt101_32x4d_SE model.
-    default: 
-        num_classes=1000, SE=False, ECA=None
-    """
-    print("Constructing resnext101_32x4d_se......")
-    model = ResNet(Bottleneck, [3, 4, 23, 3], SE=True, groups=32, width_per_group=4)
-    return model
-
-def resnext101_32x4d_eca(k_size=[5, 5, 5, 7]): 
-    """Constructs a ResNeXt101_32x4d_ECA model.
-    Args:
-        k_size: Adaptive selection of kernel size
-    """
-    print("Constructing resnext101_32x4d_eca......")
-    model = ResNet(Bottleneck, [3, 4, 23, 3], ECA=k_size, groups=32, width_per_group=4)
-    return model
     
     
