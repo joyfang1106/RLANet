@@ -2,7 +2,7 @@
 
 Recurrence along Depth: Deep Networks with Recurrent Layer Aggregation
 
-This is an implementation of RLA-Net (accept by NeurIPS-2021,[paper](url)).
+This is an implementation of RLA-Net (accept by NeurIPS-2021, [paper](url)).
 
 ![RLANet](figures/rlanet.png)
 
