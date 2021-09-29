@@ -14,6 +14,14 @@ Our RLA module is compatible with many mainstream deep CNNs, including ResNets, 
 Specifically, improvements can be uniformly observed on CIFAR, ImageNet and MS COCO datasets, and the corresponding RLA-Nets can surprisingly boost the performances by 2-3\% on the object detection task. 
 This evidences the power of our RLA module in helping main CNNs better learn structural information in images.
 
+## Citation
+
+    @InProceedings{zhao2021rla,
+       title={Recurrence along Depth: Deep Networks with Recurrent Layer Aggregation},
+       author={Jingyu Zhao, Yanwen Fang and Guodong Li},
+       booktitle = {},
+       year={2021}
+     }
 
 ## RLA module
 
@@ -33,6 +41,13 @@ This evidences the power of our RLA module in helping main CNNs better learn str
 - PyTorch 1.0+
 - [thop](https://github.com/Lyken17/pytorch-OpCounter)
 - [mmdetection](https://github.com/open-mmlab/mmdetection)
+
+### Our environments
+
+- OS: Linux Red Hat 4.8.5
+- CUDA: 10.2
+- Toolkit: Python 3.8.5, PyTorch 1.7.0, torchvision 0.8.1
+- GPU: Tesla V100
 
 Please refer to [get_started.md](docs/get_started.md) for more details about installation.
 
@@ -88,6 +103,18 @@ More examples are shown in [examples.md](docs/examples.md).
 ## Experiments
 
 More results are shown in [experiments.md](docs/experiments.md).
+
+## Experiments
+
+### ImageNet
+|Model|Param.|FLOPs|Top-1(%)|Top-5(%)|BaiduDrive(models)|Extract code|GoogleDrive|
+|:---:|:----:|:---:|:------:|:------:|:----------------:|:----------:|:---------:|
+|ECA-Net18|11.15M|1.70G|70.92|89.93|[eca_resnet18_k3577](https://pan.baidu.com/s/1Bh9J7VY2tYj5oEvEEqvdhQ)|utsy|[eca_resnet18_k3577](https://drive.google.com/open?id=1LMRFRTyzVifGBi2MUpTuYEWW44S8mwyl)|
+|ECA-Net34|20.79M|3.43G|74.21|91.83|[eca_resnet34_k3357](https://pan.baidu.com/s/1FFVUBbbJfNNFhyiZZ2P2AQ)|o4dh|[eca_resnet34_k3357](https://drive.google.com/open?id=15LV5Jkea3GPzvLP5__H7Gg88oNQUxBDE)|
+|ECA-Net50|24.37M|3.86G|77.42|93.62|[eca_resnet50_k3557](https://pan.baidu.com/s/18LXDcxy8qG66h-7FlWW4SA)|no6u|[eca_resnet50_k3557](https://drive.google.com/open?id=1670rce333c_lyMWFzBlNZoVUvtxbCF_U)|
+|ECA-Net101|42.49M|7.35G|78.65|94.34|[eca_resnet101_k3357](https://pan.baidu.com/s/1-ageRP2tku-YSIOqU09WpA)|iov1|[eca_resnet101_k3357](https://drive.google.com/open?id=1b5FQ8yDFnZ_UhvWT9txmjI_LjbKkgnvC)|
+|ECA-Net152|57.41M|10.83G|78.92|94.55|[eca_resnet152_k3357](https://pan.baidu.com/s/1tPxHAltlcpI93CXUkW9ZOQ)|xaft|[eca_resnet152_k3357](https://drive.google.com/open?id=1_bYnaOg9ptsILC_iC7uQ5Izv-u2rjYG5)|
+|ECA-MobileNet_v2|3.34M|319.9M|72.56|90.81|[eca_mobilenetv2_k13](https://pan.baidu.com/s/143B03YTGE2ogkPoCj3IorQ)|atpt|[eca_mobilenetv2_k13](https://drive.google.com/open?id=1FxzeXPg1SJQZzVVH4HRjMeq_SVMfidUm)|
 
 
 ## Questions
