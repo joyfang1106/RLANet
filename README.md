@@ -34,6 +34,7 @@ This evidences the power of our RLA module in helping main CNNs better learn str
 - 2021/04/16 Upload RLA-MobileNetV2 (depthwise separable conv version) model.
 - 2021/09/29 Upload all the ablation study on ImageNet.
 - 2021/09/30 Upload mmdetection files.
+- 2021/10/01 Upload pretrained weights.
 
 ## Installation
 
