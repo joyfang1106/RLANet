@@ -104,9 +104,9 @@ More examples are shown in [examples.md](docs/examples.md).
 
 ### MMDetection
 
-After installing MMDetection (see [get_started.md]), then do the following steps:
+After installing MMDetection (see [get_started.md](docs/get_started.md)), then do the following steps:
 
-- put the file resnet_rla.py in the folder './mmdetection/mmdet/models/backbones/', and do not forget to import the model in the __init__.py file.
+- put the file resnet_rla.py in the folder './mmdetection/mmdet/models/backbones/', and do not forget to import the model in the '__init__.py' file.
 - put the config files (e.g. faster_rcnn_r50rla_fpn.py) in the folder './mmdetection/configs/_base_/models/'
 - put the config files (e.g. faster_rcnn_r50rla_fpn_1x_coco.py) in the folder './mmdetection/configs/faster_rcnn'
 
