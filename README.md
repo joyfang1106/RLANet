@@ -118,11 +118,13 @@ Note that the config files of the latest version of MMDetection are a little dif
 
 ### ImageNet
 |Model|Param.|FLOPs|Top-1 err.(%)|Top-5 err.(%)|BaiduDrive(models)|Extract code|GoogleDrive|
-|:---:|:----:|:---:|:------:|:------:|:----------------:|:----------:|:---------:|
+|:--- |:----:|:---:|:------:|:------:|:----------------:|:----------:|:---------:|
 |RLA-ResNet50|24.67M|4.17G|22.83|6.58|[resnet50_rla_2283](https://pan.baidu.com/s/1GrNxNariVpb9S5EUFW1eng)|5lf1|[resnet50_rla_2283](https://drive.google.com/file/d/1cetP1SdOiwznLxlBUaHG8Q8c4RIwToWW/view?usp=sharing)|
 |RLA-ECANet50|24.67M|4.18G|22.15|6.11|[ecanet50_rla_2215](https://pan.baidu.com/s/1B5wVN4s_WVVq8nGiiOVncA)|xrfo|[ecanet50_rla_2215](https://drive.google.com/file/d/173qoDPGe2q5l7CKVm54-_xJtg3_UFRR-/view?usp=sharing)|
-|RLA-ResNet101|42.92M|7.79G|21.48|5.80|[resnet101_rla_2148](https://pan.baidu.com/s/1sZQlAU4ksIjnOUg4iSSO-Q)|zrv5|[resnet50_rla_2148](https://drive.google.com/file/d/1V9Iv0KbN1O92ll8rcf45kLkD9EOA9VCE/view?usp=sharing)|
-|RLA-ECANet101|42.92M|7.80G|21.13|5.61|[ecanet101_rla_2113](https://pan.baidu.com/s/1ILfQ8pK1WdnAxSWb5X88PQ)|vhpy|[ecanet50_rla_2113](https://drive.google.com/file/d/1QMR_yf0RYugpJosCSo0uNRBmfl2e7cGa/view?usp=sharing)|
+|RLA-ResNet101|42.92M|7.79G|21.48|5.80|[resnet101_rla_2148](https://pan.baidu.com/s/1sZQlAU4ksIjnOUg4iSSO-Q)|zrv5|[resnet101_rla_2148](https://drive.google.com/file/d/1V9Iv0KbN1O92ll8rcf45kLkD9EOA9VCE/view?usp=sharing)|
+|RLA-ECANet101|42.92M|7.80G|21.00|5.51|[ecanet101_rla_2100](https://pan.baidu.com/s/1ILfQ8pK1WdnAxSWb5X88PQ)|vhpy|[ecanet101_rla_2100](https://drive.google.com/file/d/1QMR_yf0RYugpJosCSo0uNRBmfl2e7cGa/view?usp=sharing)|
+|RLA-MobileNetV2|3.46M|351.8M|27.62|9.18|[dsrla_mobilenetv2_k32_2762](https://pan.baidu.com/s/135Id3juTsj0IAo0jSKooxw)|g1pm|[dsrla_mobilenetv2_k32_2762](https://drive.google.com/file/d/1yg9hsACBHZFT5R8s95igJTyaQ5iYKklV/view?usp=sharing)|
+|RLA-ECA-MobileNetV2|3.46M|352.4M|27.07|8.89|[dsrla_mobilenetv2_k32_eca_2707](https://pan.baidu.com/s/1YVN5Qze51HI9D6nNEb7iPA)|9orl|[dsrla_mobilenetv2_k32_eca_2707](https://drive.google.com/file/d/1JdEkJg9_IOnJsHWKVPQ-4YHBVabiNJXD/view?usp=sharing)|
 
 
 
