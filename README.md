@@ -120,6 +120,9 @@ Note that the config files of the latest version of MMDetection are a little dif
 |Model|Param.|FLOPs|Top-1 err.(%)|Top-5 err.(%)|BaiduDrive(models)|Extract code|GoogleDrive|
 |:---:|:----:|:---:|:------:|:------:|:----------------:|:----------:|:---------:|
 |RLA-ResNet50|24.67M|4.17G|22.83|6.58|[resnet50_rla_2283](https://pan.baidu.com/s/1GrNxNariVpb9S5EUFW1eng)|5lf1|[resnet50_rla_2283](https://drive.google.com/file/d/1cetP1SdOiwznLxlBUaHG8Q8c4RIwToWW/view?usp=sharing)|
+|RLA-ECANet50|24.67M|4.18G|22.15|6.11|[ecanet50_rla_2215](https://pan.baidu.com/s/1B5wVN4s_WVVq8nGiiOVncA)|xrfo|[ecanet50_rla_2215](https://drive.google.com/file/d/173qoDPGe2q5l7CKVm54-_xJtg3_UFRR-/view?usp=sharing)|
+|RLA-ResNet101|42.92M|7.79G|21.48|5.80|[resnet101_rla_2148](https://pan.baidu.com/s/1sZQlAU4ksIjnOUg4iSSO-Q)|zrv5|[resnet50_rla_2148](https://drive.google.com/file/d/1V9Iv0KbN1O92ll8rcf45kLkD9EOA9VCE/view?usp=sharing)|
+|RLA-ECANet101|42.92M|7.80G|21.13|5.61|[ecanet101_rla_2113](https://pan.baidu.com/s/1ILfQ8pK1WdnAxSWb5X88PQ)|vhpy|[ecanet50_rla_2113](https://drive.google.com/file/d/1QMR_yf0RYugpJosCSo0uNRBmfl2e7cGa/view?usp=sharing)|
 
 
 
