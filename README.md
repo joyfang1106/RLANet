@@ -117,6 +117,7 @@ Note that the config files of the latest version of MMDetection are a little dif
 ## Experiments
 
 ### ImageNet
+
 |Model|Param.|FLOPs|Top-1 err.(%)|Top-5 err.(%)|BaiduDrive(models)|Extract code|GoogleDrive|
 |:--- |:----:|:---:|:------:|:------:|:----------------:|:----------:|:---------:|
 |RLA-ResNet50|24.67M|4.17G|22.83|6.58|[resnet50_rla_2283](https://pan.baidu.com/s/1GrNxNariVpb9S5EUFW1eng)|5lf1|[resnet50_rla_2283](https://drive.google.com/file/d/1cetP1SdOiwznLxlBUaHG8Q8c4RIwToWW/view?usp=sharing)|
@@ -129,6 +130,20 @@ Note that the config files of the latest version of MMDetection are a little dif
 
 
 ### COCO 2017
+
+|Model|AP|AP_50|AP_75|BaiduDrive(models)|Extract code|GoogleDrive|
+|:---- |:--:|:-------:|:-------:|:----------------:|:----------:|:---------:|
+|Fast_R-CNN_resnet50_rla|38.8|59.6|42.0|[faster_rcnn_r50rla_fpn_1x_coco_388](https://pan.baidu.com/s/1Kz39oBtwNporxM5mSGD8rw)|q5c8|[faster_rcnn_r50rla_fpn_1x_coco_388](https://drive.google.com/file/d/16yqHnLT2ZZuLTcLDejyi7fsxPRuh36hN/view?usp=sharing)|
+|Fast_R-CNN_ecanet50_rla|39.8|61.2|43.2|[faster_rcnn_r50rlaeca_fpn_1x_coco_398](https://pan.baidu.com/s/1UD-3nECcc0rYcQ6Fc86yDg)|f5xs|[faster_rcnn_r50rlaeca_fpn_1x_coco_398](https://drive.google.com/file/d/1oLZtRCNr0x8c6xACS41znmWKsm2SnqEw/view?usp=sharing)|
+
+
+
+
+RetinaNet
+Mask_R-CNN
+
+
+
 
 
 ## Questions
