@@ -135,12 +135,16 @@ Note that the config files of the latest version of MMDetection are a little dif
 |:---- |:--:|:-------:|:-------:|:----------------:|:----------:|:---------:|
 |Fast_R-CNN_resnet50_rla|38.8|59.6|42.0|[faster_rcnn_r50rla_fpn_1x_coco_388](https://pan.baidu.com/s/1Kz39oBtwNporxM5mSGD8rw)|q5c8|[faster_rcnn_r50rla_fpn_1x_coco_388](https://drive.google.com/file/d/16yqHnLT2ZZuLTcLDejyi7fsxPRuh36hN/view?usp=sharing)|
 |Fast_R-CNN_ecanet50_rla|39.8|61.2|43.2|[faster_rcnn_r50rlaeca_fpn_1x_coco_398](https://pan.baidu.com/s/1UD-3nECcc0rYcQ6Fc86yDg)|f5xs|[faster_rcnn_r50rlaeca_fpn_1x_coco_398](https://drive.google.com/file/d/1oLZtRCNr0x8c6xACS41znmWKsm2SnqEw/view?usp=sharing)|
-
-
-
-
-RetinaNet
-Mask_R-CNN
+|Fast_R-CNN_resnet101_rla|41.2|61.8|44.9|[faster_rcnn_r101rla_fpn_1x_coco_412](https://pan.baidu.com/s/13Ec2jUrs7z32Z4ovRA0j0g)|0ri3|[faster_rcnn_r101rla_fpn_1x_coco_412](https://drive.google.com/file/d/15UqsMFKPSeBWnr-v7fy8Q2qidkj5_9Rj/view?usp=sharing)|
+|Fast_R-CNN_ecanet101_rla|42.1|63.3|46.1|[faster_rcnn_r101rlaeca_fpn_1x_coco_421](https://pan.baidu.com/s/1ue02A9evqCbi7KFWeHyH1A)|cpug|[faster_rcnn_r101rlaeca_fpn_1x_coco_421](https://drive.google.com/file/d/1OhiVpiwohQG436ruUyV683xzmdfYV9el/view?usp=sharing)|
+|RetinaNet_resnet50_rla|37.9|57.0|40.8|[retinanet_r50rla_fpn_1x_coco_379](https://pan.baidu.com/s/1u6aDamYPj4WRYzVAxTxgvA)|lahj|[retinanet_r50rla_fpn_1x_coco_379](https://drive.google.com/file/d/1sbKOUvSV0u1nj1WHSNVzSQTvB8PGIcwy/view?usp=sharing)|
+|RetinaNet_ecanet50_rla|39.0|58.7|41.7|[retinanet_r50rlaeca_fpn_1x_coco_390](https://pan.baidu.com/s/17VHcUDWvW9CxYnScym7i3g)|adyd|[retinanet_r50rlaeca_fpn_1x_coco_390](https://drive.google.com/file/d/1okSs7HzBex9uB_AhKbF9qWq8rW8mEGrw/view?usp=sharing)|
+|RetinaNet_resnet101_rla|40.3|59.8|43.5|[retinanet_r101rla_fpn_1x_coco_403](https://pan.baidu.com/s/14-QdA1pl4e0iV4DYfvKrFw)|p8y0|[retinanet_r101rla_fpn_1x_coco_403](https://drive.google.com/file/d/1PWKq1AiOf1f9dm_k7zUin9fcsQfKx7U-/view?usp=sharing)|
+|RetinaNet_ecanet101_rla|41.5|61.6|44.4|[retinanet_r101rlaeca_fpn_1x_coco_415](https://pan.baidu.com/s/1ArVb6TR1ifwGMx3RXL6ILw)|hdqx|[retinanet_r101rlaeca_fpn_1x_coco_415](https://drive.google.com/file/d/1Hl7mhi-CAPnWR_m2reJug8hzhkokYQpa/view?usp=sharing)|
+|Mask_R-CNN_resnet50_rla|39.5|60.1|43.3|[mask_rcnn_r50rla_fpn_1x_coco_395](https://pan.baidu.com/s/1FF3RJDTcABt1GjvmqCEXmQ)|j1x6|[mask_rcnn_r50rla_fpn_1x_coco_395](https://drive.google.com/file/d/1UrIzo9ZunyjwTRVm6qZmbJtfEJ2Fnqcp/view?usp=sharing)|
+|Mask_R-CNN_ecanet50_rla|40.6|61.8|44.0|[mask_rcnn_r50rlaeca_fpn_1x_coco_406](https://pan.baidu.com/s/1Ne4Rb33VN5_UyFxtyzxBQw)|c08r|[mask_rcnn_r50rlaeca_fpn_1x_coco_406](https://drive.google.com/file/d/1i6J0h_5FZDg8BxvGvS1VBbVxHIxmJk4L/view?usp=sharing)|
+|Mask_R-CNN_resnet101_rla|41.8|62.3|46.2|[mask_rcnn_r101rla_fpn_1x_coco_418](https://pan.baidu.com/s/1X_fLMF73vlBCb2GBurGCeQ)|8bsn|[mask_rcnn_r101rla_fpn_1x_coco_418](https://drive.google.com/file/d/1mGS2R5vx-u9KyQoK1WpyQwx-J7PI9lN2/view?usp=sharing)|
+|Mask_R-CNN_ecanet101_rla|42.9|63.6|46.9|[mask_rcnn_r101rlaeca_fpn_1x_coco_429](https://pan.baidu.com/s/1zeLKIZPJGaM77nDNMnhrIA)|3kmz|[mask_rcnn_r101rlaeca_fpn_1x_coco_429](https://drive.google.com/file/d/1RKkoE8E6n1CG2BDaNuYGLzrxWY9j7XB_/view?usp=sharing)|
 
 
 
