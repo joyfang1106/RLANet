@@ -14,14 +14,6 @@ Our RLA module is compatible with many mainstream deep CNNs, including ResNets, 
 Specifically, improvements can be uniformly observed on CIFAR, ImageNet and MS COCO datasets, and the corresponding RLA-Nets can surprisingly boost the performances by 2-3\% on the object detection task. 
 This evidences the power of our RLA module in helping main CNNs better learn structural information in images.
 
-## Citation
-
-    @InProceedings{zhao2021rla,
-       title={Recurrence along Depth: Deep Networks with Recurrent Layer Aggregation},
-       author={Jingyu Zhao, Yanwen Fang and Guodong Li},
-       booktitle = {},
-       year={2021}
-     }
 
 ## RLA module
 
@@ -148,6 +140,18 @@ Note that the config files of the latest version of MMDetection are a little dif
 
 
 
+## Citation
+     
+```bibtex
+@misc{zhao2021rlanet,
+    title   = {Recurrence along Depth: Deep Networks with Recurrent Layer Aggregation}, 
+    author  = {Jingyu Zhao, Yanwen Fang and Guodong Li},
+    year    = {2021},
+    eprint  = {},
+    archivePrefix = {arXiv},
+    primaryClass = {cs.CV}
+}
+```
 
 
 ## Questions
