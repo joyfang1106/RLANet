@@ -156,5 +156,5 @@ Note that the config files of the latest version of MMDetection are a little dif
 
 ## Questions
 
-Please contact 'u3545683@hku.hk' or 'gladys17@hku.hk'.
+Please contact 'u3545683@connect.hku.hk' or 'gladys17@connect.hku.hk'.
 
