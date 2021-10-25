@@ -2,7 +2,7 @@
 
 Recurrence along Depth: Deep Networks with Recurrent Layer Aggregation
 
-This is an implementation of RLA-Net (accept by NeurIPS-2021, [paper](url)).
+This is an implementation of RLA-Net (accept by NeurIPS-2021, [paper](http://arxiv.org/abs/2110.11852)).
 
 ![RLANet](figures/rlanet.png)
 
@@ -143,13 +143,13 @@ Note that the config files of the latest version of MMDetection are a little dif
 ## Citation
      
 ```bibtex
-@misc{zhao2021rlanet,
-    title   = {Recurrence along Depth: Deep Networks with Recurrent Layer Aggregation}, 
-    author  = {Jingyu Zhao, Yanwen Fang and Guodong Li},
-    year    = {2021},
-    eprint  = {},
-    archivePrefix = {arXiv},
-    primaryClass = {cs.CV}
+@misc{zhao2021recurrence,
+      title={Recurrence along Depth: Deep Convolutional Neural Networks with Recurrent Layer Aggregation}, 
+      author={Jingyu Zhao and Yanwen Fang and Guodong Li},
+      year={2021},
+      eprint={2110.11852},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
 }
 ```
 
