@@ -14,15 +14,16 @@ parser.add_argument('--arch', '-a', metavar='ARCH', default='rla_resnet50',
                     choices=model_names,
                     help='model architecture: ' +
                         ' | '.join(model_names) +
-                        ' (default: rla_resnet50)')
+                        ' (default: resnet50)')
+parser.add_argument('--input-size', '-i', default=224, type=int,
+                    metavar='N', help='input image size (default: 224)')
 
 def main():
     global args
     args = parser.parse_args()
     model = models.__dict__[args.arch]() 
-    # model.flops = True
     print(model)
-    input = torch.randn(1, 3, 224, 224)
+    input = torch.randn(1, 3, args.input_size, args.input_size)
     model.train()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
