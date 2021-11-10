@@ -20,7 +20,7 @@ def main():
     global args
     args = parser.parse_args()
     model = models.__dict__[args.arch]() 
-    model.flops = True
+    # model.flops = True
     print(model)
     input = torch.randn(1, 3, 224, 224)
     model.train()
