@@ -239,10 +239,7 @@ class RLAv1_ResNet(nn.Module):
 
         batch, _, height, width = x.size()
         # self.rla_channel = rla_channel
-        if self.flops: # flops = True, then we compute the flops and params of the model
-            h = torch.zeros(batch, self.rla_channel, height, width)
-        else:
-            h = torch.zeros(batch, self.rla_channel, height, width, device='cuda')
+        h = torch.zeros(batch, self.rla_channel, height, width, device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
 
         for layers, bns, conv_out, recurrent_conv in zip(self.stages, self.stage_bns, self.conv_outs, self.recurrent_convs):
             for layer, bn in zip(layers, bns):
